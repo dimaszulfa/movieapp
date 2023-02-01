@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 
 import 'package:movieapp/models/product_models.dart';
+import 'package:movieapp/view/movie_detail.dart';
 
 class GridItem extends StatelessWidget {
   final String name;
@@ -11,19 +12,44 @@ class GridItem extends StatelessWidget {
   final int index;
 
   GridItem(this.name, this.isFavorite, this.description, this.index);
-
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-      footer: GridTileBar(
-          backgroundColor: Colors.black.withOpacity(0.2),
-          title: Text(name),
-          trailing: IconButton(
-              onPressed: () => log("clicked"),
-              icon: const Icon(Icons.favorite_border))),
-      child: Image.network(
-        "https://picsum.photos/id/$index/200/300",
-        fit: BoxFit.cover,
+    var snackBar = SnackBar(content: Text("U Clicked $name"));
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: GestureDetector(
+        onTap: () {
+          // log("$name di klik");
+          // showDialog(
+          //   context: context,
+          //   builder: (context) {
+          //     return
+          //     AlertDialog(
+          //       title: Text("$name"),
+          //       content: Text("$description"),
+          //     );
+          //   },
+          // );
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const MovieDetail()));
+          // Navigator.pop(context,
+          //     MaterialPageRoute(builder: (context) => const MovieDetail()));
+        },
+        child: GridTile(
+          footer: GridTileBar(
+              backgroundColor: Colors.black.withOpacity(0.2),
+              title: Text(name),
+              trailing: IconButton(
+                  onPressed: () {
+                    log("clicked");
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
+                  icon: const Icon(Icons.favorite_border))),
+          child: Image.network(
+            "https://picsum.photos/id/$index/200/300",
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

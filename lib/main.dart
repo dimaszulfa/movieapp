@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Movie App"),
       ),
       body: GridView.builder(
+        padding: EdgeInsets.all(10),
         itemCount: dataList.length,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200,
