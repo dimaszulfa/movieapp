@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 
 import 'package:movieapp/models/product_models.dart';
+import 'package:movieapp/provider/all_product.dart';
+import 'package:movieapp/routes/routes.dart';
 import 'package:movieapp/view/movie_detail.dart';
+import 'package:provider/provider.dart';
 
 class GridItem extends StatelessWidget {
   final String name;
@@ -30,8 +33,9 @@ class GridItem extends StatelessWidget {
           //     );
           //   },
           // );
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const MovieDetail()));
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => const MovieDetail())); //apabila tidak menginisiasi routes di home menggnakan seperti ini
+          Navigator.of(context).pushNamed(Routes.routeDetail, arguments: name);
           // Navigator.pop(context,
           //     MaterialPageRoute(builder: (context) => const MovieDetail()));
         },

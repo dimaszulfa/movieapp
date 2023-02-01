@@ -1,5 +1,9 @@
 import 'dart:developer';
 import 'package:faker/faker.dart';
+import 'package:movieapp/provider/all_product.dart';
+import 'package:movieapp/view/movie_detail.dart';
+import 'package:provider/provider.dart';
+import 'routes/routes.dart';
 
 import 'grid_item.dart';
 
@@ -16,11 +20,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Movie App",
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: const HomePage(),
+    return ChangeNotifierProvider(
+      create: (context) => AllProduct(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Movie App",
+        theme: ThemeData(primarySwatch: Colors.green),
+        home: const HomePage(),
+        routes: {Routes.routeDetail: (ctx) => const MovieDetail()},
+      ),
     );
   }
 }
@@ -35,11 +43,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final faker = Faker();
-    final List<ProductModels> dataList = List.generate(
-        20,
-        (index) => ProductModels(
-            name: faker.person.name(), description: faker.lorem.sentence()));
+    var provider = Provider.of<AllProduct>(context);
+    final dataList = provider.allProduct;
+    // final faker = Faker();
+    // final List<ProductModels> dataList = List.generate(
+    //     20,
+    //     (index) => ProductModels(
+    //         name: faker.person.name(), description: faker.lorem.sentence()));
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movie App"),
