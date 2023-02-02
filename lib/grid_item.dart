@@ -14,12 +14,13 @@ class GridItem extends StatelessWidget {
   // final String description;
   // final int index;
 
+  const GridItem();
   // GridItem(this.name, this.isFavorite, this.description, this.index);
 
   @override
   Widget build(BuildContext context) {
     final movie = Provider.of<ProductModels>(context);
-    var snackBar = SnackBar(content: Text("U Clicked $movie.name"));
+    var snackBar = SnackBar(content: Text("U Clicked ${movie.name}"));
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: GestureDetector(
@@ -48,10 +49,13 @@ class GridItem extends StatelessWidget {
               title: Text(movie.name),
               trailing: IconButton(
                   onPressed: () {
+                    movie.setStatus();
                     log("clicked");
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
-                  icon: const Icon(Icons.favorite_border))),
+                  icon: (movie.isFavorite)
+                      ? const Icon(Icons.favorite)
+                      : const Icon(Icons.favorite_border))),
           child: Image.network(
             movie.image,
             fit: BoxFit.cover,

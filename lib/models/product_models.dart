@@ -11,4 +11,9 @@ class ProductModels with ChangeNotifier {
       this.isFavorite = false,
       required this.description,
       required this.image});
+
+  void setStatus() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }
