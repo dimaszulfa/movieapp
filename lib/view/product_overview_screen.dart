@@ -26,12 +26,9 @@ class ProductOverviewScreen extends StatelessWidget {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20),
       itemBuilder: (context, index) {
-        return ChangeNotifierProvider(
-          // create: (context) => AllProduct(),
-          // child: GridItem(dataList[index].name, dataList[index].isFavorite,
-          //     dataList[index].description, index),
-
-          create: (context) => movie[index],
+        return ChangeNotifierProvider.value(
+          // create: (context) => movie[index],
+          value: movie[index],
           child: GridItem(),
         );
       },

@@ -19,8 +19,9 @@ class GridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movie = Provider.of<ProductModels>(context);
+    final movie = Provider.of<ProductModels>(context, listen: false);
     var snackBar = SnackBar(content: Text("U Clicked ${movie.name}"));
+    log("WIDGET REBUILD");
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: GestureDetector(
@@ -47,15 +48,17 @@ class GridItem extends StatelessWidget {
           footer: GridTileBar(
               backgroundColor: Colors.black.withOpacity(0.2),
               title: Text(movie.name),
-              trailing: IconButton(
-                  onPressed: () {
-                    movie.setStatus();
-                    log("clicked");
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  icon: (movie.isFavorite)
-                      ? const Icon(Icons.favorite)
-                      : const Icon(Icons.favorite_border))),
+              trailing: Consumer<ProductModels>(
+                builder: (context, value, child) => IconButton(
+                    onPressed: () {
+                      movie.setStatus();
+                      log("clicked");
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    icon: (movie.isFavorite)
+                        ? const Icon(Icons.favorite)
+                        : const Icon(Icons.favorite_border)),
+              )),
           child: Image.network(
             movie.image,
             fit: BoxFit.cover,
