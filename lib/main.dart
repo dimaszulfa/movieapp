@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:faker/faker.dart';
 import 'package:movieapp/provider/all_product.dart';
 import 'package:movieapp/view/movie_detail.dart';
+import 'package:movieapp/view/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 import 'routes/routes.dart';
 
@@ -54,19 +55,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Movie App"),
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: dataList.length,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            childAspectRatio: 2 / 3,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemBuilder: (context, index) {
-          return GridItem(dataList[index].name, dataList[index].isFavorite,
-              dataList[index].description, index);
-        },
-      ),
+      body: ProductOverviewScreen(dataList: dataList),
     );
   }
 }

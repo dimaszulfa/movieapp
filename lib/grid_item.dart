@@ -9,15 +9,17 @@ import 'package:movieapp/view/movie_detail.dart';
 import 'package:provider/provider.dart';
 
 class GridItem extends StatelessWidget {
-  final String name;
-  final bool isFavorite;
-  final String description;
-  final int index;
+  // final String name;
+  // final bool isFavorite;
+  // final String description;
+  // final int index;
 
-  GridItem(this.name, this.isFavorite, this.description, this.index);
+  // GridItem(this.name, this.isFavorite, this.description, this.index);
+
   @override
   Widget build(BuildContext context) {
-    var snackBar = SnackBar(content: Text("U Clicked $name"));
+    final movie = Provider.of<ProductModels>(context);
+    var snackBar = SnackBar(content: Text("U Clicked $movie.name"));
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: GestureDetector(
@@ -35,14 +37,15 @@ class GridItem extends StatelessWidget {
           // );
           // Navigator.of(context).push(
           //     MaterialPageRoute(builder: (context) => const MovieDetail())); //apabila tidak menginisiasi routes di home menggnakan seperti ini
-          Navigator.of(context).pushNamed(Routes.routeDetail, arguments: name);
+          Navigator.of(context)
+              .pushNamed(Routes.routeDetail, arguments: movie.name);
           // Navigator.pop(context,
           //     MaterialPageRoute(builder: (context) => const MovieDetail()));
         },
         child: GridTile(
           footer: GridTileBar(
               backgroundColor: Colors.black.withOpacity(0.2),
-              title: Text(name),
+              title: Text(movie.name),
               trailing: IconButton(
                   onPressed: () {
                     log("clicked");
@@ -50,7 +53,7 @@ class GridItem extends StatelessWidget {
                   },
                   icon: const Icon(Icons.favorite_border))),
           child: Image.network(
-            "https://picsum.photos/id/$index/200/300",
+            movie.image,
             fit: BoxFit.cover,
           ),
         ),
